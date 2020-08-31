@@ -1,0 +1,4 @@
+aoc**/.git*
+aoc**/Cargo.lock
+aoc**/debug
+aoc**/target
