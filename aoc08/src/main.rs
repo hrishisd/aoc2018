@@ -1,4 +1,3 @@
-// use itertools::Itertools;
 type Result<T> = std::result::Result<T, std::boxed::Box<dyn std::error::Error>>;
 #[derive(Debug)]
 struct Node {
@@ -28,7 +27,7 @@ fn part2(root: &Node) -> usize {
 }
 
 fn calculate_value_rec(node: &Node) -> usize {
-    if node.children.len() == 0 {
+    if node.children.is_empty() {
         node.metadata_entries.iter().sum()
     } else {
         node.metadata_entries
