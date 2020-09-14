@@ -1,12 +1,4 @@
-use intrusive_collections::intrusive_adapter;
-use intrusive_collections::{KeyAdapter, LinkedList, LinkedListLink};
 use serde_scan::scan;
-
-#[derive(Debug)]
-struct CircleElement {
-    link: LinkedListLink,
-    value: Marble,
-}
 
 #[derive(Debug)]
 struct State {
@@ -18,16 +10,9 @@ struct State {
     points: Vec<usize>,
 }
 
-intrusive_adapter!(CircleElementAdapter = Box<CircleElement>: CircleElement { link: LinkedListLink });
-impl<'a> KeyAdapter<'a> for CircleElementAdapter {
-    type Key = Marble;
-    fn get_key(&self, e: &'a CircleElement) -> usize {
-        e.value
-    }
-}
-
 type Marble = usize;
 type Result<T> = std::result::Result<T, std::boxed::Box<dyn std::error::Error>>;
+
 fn main() -> Result<()> {
     let input = std::fs::read_to_string("input")?;
     let input_str = input.as_str();
@@ -47,7 +32,7 @@ fn part1(mut state: State, last_marble: Marble) -> Result<usize> {
         .iter()
         .cloned()
         .max()
-        .ok_or(std::boxed::Box::from("error"))
+        .ok_or_else(|| std::boxed::Box::from("error"))
 }
 
 impl State {
